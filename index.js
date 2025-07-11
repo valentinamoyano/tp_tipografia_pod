@@ -50,7 +50,7 @@ function setup() {
   createCanvas(1300, 2500)
   background(0)
 
-  //Función del formato de la interactividad
+  //FORMATO INTERACTIVIDAD - FUNCIÓN
   interactivdad(1300)
 
   mostrartipo1 = true
@@ -59,18 +59,18 @@ function setup() {
 
 function draw() {
   // Se ejecuta después de setup continuamente 
-
-  //Función de configuración de las interacciones
-  interacciones(1300)
+  
+  
+  //PARTE 2: LISTA RANDOM - FUNCIÓN
   push() //sin push y pop no funciona lo interactivo
-  dibujarRandom(700) 
+  dibujarRandom(250, 700) 
   pop()
 
-  //PARTE CATALOGO
+  //PARTE 1: CATÁLOGO
 
   push() //sin push y pop no funciona bien
   fill(0)
-  rect(0,0,800,600)//reemplaza al background(0)
+  rect(0,0,1300,600)//reemplaza al background(0)
 
   tiempoActual = millis()
   tiempoPasado = tiempoActual - tiempoInicio
@@ -81,7 +81,7 @@ function draw() {
     textAlign(CENTER, CENTER)
     textFont(fuenteTHINI)
     textSize(150)
-    text("THINI", 400, 300)
+    text("THINI", width/2, 300)
    
     textosIzqyDer(fuenteTHINI, color(58, 228, 64))
     palabrasRandom(fuenteTHINI)
@@ -90,14 +90,14 @@ function draw() {
     
   noStroke()
   fill(58, 228, 64) 
-  rect(0,0,800,600)//reemplaza al background verde
+  rect(0,0,1300,600)//reemplaza al background verde
 
   fill(0)
   textAlign(CENTER, CENTER)
   textFont(fuenteTHINI)
   textSize(150)
-  text("THINI", 400, 300)
-  text("GRID", 400, 300 + 120)
+  text("THINI", width/2, 300)
+  text("GRID", width/2, 300 + 120)
 
   textosIzqyDer(fuenteGRID, 0)
   palabrasRandom(fuenteGRID)
@@ -112,8 +112,13 @@ function draw() {
   }
   pop()
 
+  //CONFIGURACIÓN DE LAS INTERACCIONES - FUNCIÓN
+  interacciones(1300)
+
 
 }
+
+//FUNCIONES
 
 // FUNCIÓN FORMATO DE LAS INTERACCIONES
 
@@ -121,6 +126,7 @@ function interactivdad(y) {
   //Caja de Texto
   input = createInput("Proba")
   input.position(550, 530 + y)
+  input.attribute('maxlength', '23');
   inputP = createP('REDACTAR')
   inputP.position(550, 475 + y)
   inputP.addClass('etiqueta')
@@ -219,14 +225,12 @@ function interacciones(y) {
   //Botón Radial
   let eleccionRadio = radio.value()
 
-  //Caja de Texto
-  let texto = input.value()
-  text(texto, 60, 260 + y, 1150)
+
 
   //Selector 1 - ESTILOS
 
   let eleccionSelector1 = selector1.value()
-
+  push()
   if (eleccionSelector1 == 'Relleno') {
     noStroke()
     fill(58, 228, 64, opacidad)
@@ -314,44 +318,52 @@ function interacciones(y) {
     textFont(fuenteTHINIGRID)
     textSize(100)
   }
+
+  //Caja de Texto
+  let texto = input.value()
+  text(texto, 60, 260 + y)
+  pop()
 }
 
-function dibujarRandom(posicionY){
+//FUNCIÓN LISTA RANDOM - PARTE 2
+
+function dibujarRandom(posicionX, posicionY){
   
   for (let i = 1; i < 8; i = i +1) {
     // Bloque que se ejecuta en cada iteración
   let posY = i * 70 + posicionY;
 
   fill(0)
-  rect(50,posY-55,1300,55)  //esto reemplaza poner background(0) con el objetivo de limpiar lo escrito
+  rect(50 + posicionX, posY-55,1300,55)  //esto reemplaza poner background(0) con el objetivo de limpiar lo escrito
   
   textFont(fuenteGRID)
   textSize(80)
   fill (58, 228, 64)
-  text('ESCRIBIrrrrrrrrrrr',50,posY)
+  text('ESCRIBIrrrrrrrrrrr',50 + posicionX, posY)
 
   frameRate(5)
 
   textFont(fuenteTHINI)
-  text(random(palabras), 50,posY)
+  text(random(palabras), 50 + posicionX, posY)
 
   textFont(fuenteTHINI)
-  text(random(numeros), 737,posY)
+  text(random(numeros), 737  + posicionX, posY)
 
   textFont(fuenteTHINI)
-  text(random(numeros), 737-41,posY)
+  text(random(numeros), 737-41  + posicionX, posY)
 
   textFont(fuenteTHINI)
-  text(random(numeros), 737-81,posY)
+  text(random(numeros), 737-81  + posicionX, posY)
 
   textFont(fuenteTHINI)
-  text(random(numeros), 737-122,posY)
+  text(random(numeros), 737-122  + posicionX, posY)
   }
  
 
 }
 
-// FUNCIONES DE DIBUJO PARTE CATALOGO
+// FUNCIONES DE DIBUJO PARTES DEL CATALOGO - PARTE 1
+// Para poder hacer el glitch se repiten dos veces 
 function textosIzqyDer(fuente, colorTexto) {
   fill(colorTexto)
   textFont(fuente)
@@ -359,8 +371,6 @@ function textosIzqyDer(fuente, colorTexto) {
   textSize(20)
   text("error... error00error... error", 30, 40)
   text("error... error", 30, 70)
-
-  textSize(30);
   text("fuente", 30, 100)
   text("fuente", 220, 230)
   text("abcdefg", 30, 450)
@@ -370,19 +380,20 @@ function textosIzqyDer(fuente, colorTexto) {
 
   textAlign(RIGHT, TOP)
   textSize(20)
-  text("01 caja alta", 770, 40)
-  text("error", 770, 70)
-  text("03 altura en x", 770, 100)
-  text("123 123 123 123 123", 770, 130)
-  text("......uwu.....", 770, 160)
-  text("thini thini thini mua", 770, 540)
+  text("01 caja alta", 1270, 40)
+  text("error", 1270, 70)
+  text("03 altura en x", 1270, 100)
+  text("123 123 123 123 123", 1270, 130)
+  text("......uwu.....", 1270, 160)
+  text("thini thini thini mua", 1270, 540)
 
 }
 
 function palabrasRandom (fuente){
    // Palabras glitch aleatorias
   textFont(fuente)
-  text("thini", random(0,800), random(0,400))
-  text("tipografia", random(0,800), random(0,400))
-  text("pod", random(0,800), random(0,400))
+  text("thini", random(0,width), random(0,600-30))
+  text("tipografia", random(0,width), random(0,600-30))
+  text("pod", random(0,width), random(0,600-30))
+  text("mua", random(0,width), random(0,600 -30))
 }
